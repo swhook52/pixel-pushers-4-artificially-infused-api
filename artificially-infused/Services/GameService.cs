@@ -6,10 +6,12 @@ namespace artificially_infused.Services
     public class GameService
     {
         private readonly GameRepository _gameRepository;
+        private readonly PromptsRepository _promptsRepository;
 
         public GameService(GameRepository gameRepo)
         {
             _gameRepository = gameRepo;
+            _promptsRepository = new PromptsRepository();
         }
 
         public async Task<Game> GetGame(string gameId)
@@ -33,12 +35,30 @@ namespace artificially_infused.Services
             await _gameRepository.SaveGameAsync(game);
         }
 
+        private string GetRandomPrompt()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Prompts.Count);
+            return _promptsRepository.Prompts[num];
+        }
+
+        private string GetRandomPromptWithStyle()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Prompts.Count);
+            return _promptsRepository.Prompts[num] + " in the style of " + GetRandomPrompt();
+        }
+
+        private string GetRandomStyle()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Styles.Count);
+            return _promptsRepository.Styles[num];
+        }
+
         private string getTemplate()
         {
-            // Get a random prompt template from storage.
-            // Not sure how we're getting this right now
-
-            return "A {NOUN} riding a unicycle while juggling multiple {NOUN}";
+            return GetRandomPrompt();
         }
 
         public async Task<Game> CreateGame()
@@ -111,5 +131,6 @@ namespace artificially_infused.Services
             // Update the Storage
             await _gameRepository.SaveGameAsync(existingGame);
         }
+
     }
 }
