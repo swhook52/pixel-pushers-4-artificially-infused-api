@@ -1,10 +1,12 @@
 ﻿using artificially_infused.Controllers.game;
+using System.Threading.Tasks;
 
 namespace artificially_infused.Services
 {
     public class GameService
     {
         private readonly GameRepository _gameRepository;
+
         public GameService(GameRepository gameRepo)
         {
             _gameRepository = gameRepo;
@@ -13,23 +15,58 @@ namespace artificially_infused.Services
         public async Task<Game> GetGame(string gameId)
         {
             return await _gameRepository.GetGameAsync(gameId);
-       }
-
-        public Game CreateGame()
-        {
-            return GameBuilder.NewGame();
         }
 
-        public void DeleteGame(string gameId)
+        public async Task StartGame(string gameId)
         {
-            GameBuilder.DeleteGame(gameId);
+            // Get the game from storage
+            var game = await _gameRepository.GetGameAsync(gameId);
+
+            // Create a round
+            game.Round = new Round
+            {
+                RoundNumber = 1,
+                Template = getTemplate(),
+            };
+
+            // Save to storage
+            await _gameRepository.SaveGameAsync(game);
         }
 
-        public void AddPlayerToGame(string gameId, Player player)
+        private string getTemplate()
         {
-            // Get the Game (should probalby throw if it's not there)
-            var existingGame = GameBuilder.GetGame(gameId);
-            
+            // Get a random prompt template from storage.
+            // Not sure how we're getting this right now
+
+            return "A {NOUN} riding a unicycle while juggling multiple {NOUN}";
+        }
+
+        public async Task<Game> CreateGame()
+        {
+            // Generate a new game with a code
+            var newGame = GameBuilder.NewGame();
+
+            // Save to storage
+            await _gameRepository.SaveGameAsync(newGame);
+
+            // Return it back
+            return newGame;
+        }
+
+        public async Task DeleteGame(string gameId)
+        {
+            await _gameRepository.DeleteGameAsync(gameId);
+        }
+
+        public async Task AddPlayerToGame(string gameId, Player player)
+        {
+            // Get the game from storage
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
+
             // Add the player
             if (existingGame.Players == null)
             {
@@ -45,12 +82,17 @@ namespace artificially_infused.Services
             }
 
             // Update the Storage
+            await _gameRepository.SaveGameAsync(existingGame);
         }
 
-        public void DeletePlayerFromGame(string gameId, string playerId)
+        public async Task DeletePlayerFromGame(string gameId, string playerId)
         {
-            // Get the Game (should probalby throw if it's not there)
-            var existingGame = GameBuilder.GetGame(gameId);
+            // Get the game from storage
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
 
             // Delete the player
             if (existingGame.Players == null)
@@ -67,6 +109,7 @@ namespace artificially_infused.Services
             existingGame.Players.Remove(existingPlayer);
 
             // Update the Storage
+            await _gameRepository.SaveGameAsync(existingGame);
         }
     }
 }
