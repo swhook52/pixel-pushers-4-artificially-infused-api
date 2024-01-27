@@ -23,5 +23,11 @@ namespace artificially_infused.Controllers.tv
         {
             // Delete from storage
         }
+
+        public static Game GetGame(string gameId)
+        {
+            // Get from storage
+            return NewGame();
+        }
     }
 }
