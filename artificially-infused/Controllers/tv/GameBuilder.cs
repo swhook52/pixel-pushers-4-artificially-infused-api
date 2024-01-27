@@ -18,5 +18,10 @@ namespace artificially_infused.Controllers.tv
 
             return existingGame;
         }
+
+        public static void DeleteGame(string gameId)
+        {
+            // Delete from storage
+        }
     }
 }
