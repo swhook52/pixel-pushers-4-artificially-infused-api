@@ -1,4 +1,4 @@
-﻿namespace artificially_infused.Controllers.tv
+﻿namespace artificially_infused.Controllers.game
 {
     /*"roundNumber": 1,
         "template": "I would like to {verb} with the {noun}.",

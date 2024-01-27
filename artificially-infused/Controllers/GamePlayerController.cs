@@ -1,4 +1,4 @@
-﻿using artificially_infused.Controllers.tv;
+﻿using artificially_infused.Controllers.game;
 using artificially_infused.Services;
 using Microsoft.AspNetCore.Mvc;
 

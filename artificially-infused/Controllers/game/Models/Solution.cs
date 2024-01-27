@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace artificially_infused.Controllers.tv
+namespace artificially_infused.Controllers.game
 {
     /*"playerId": 5678,
                 "prompt": "I would like to jump with the dog.",

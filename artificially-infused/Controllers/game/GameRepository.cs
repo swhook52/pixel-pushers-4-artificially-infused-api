@@ -2,7 +2,7 @@
 using Azure.Data.Tables;
 using System.Threading.Tasks;
 
-namespace artificially_infused.Controllers.tv
+namespace artificially_infused.Controllers.game 
 {
    
     public class GameRepository

@@ -1,12 +1,13 @@
-﻿using artificially_infused.Controllers.tv;
+﻿using artificially_infused.Controllers.game;
 using artificially_infused.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace artificially_infused.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GameController
+    public class GameController: ControllerBase
     {
         public GameService _gameService;
 
@@ -17,10 +18,29 @@ namespace artificially_infused.Controllers
 
         [HttpGet("{gameId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Game> Get(string gameId)
+        public async Task<ActionResult<Game>> Get(string gameId)
         {
-            var game = _gameService.GetGame(gameId);
-            return new OkObjectResult(game);
+            
+            
+            try
+            {
+                var game =  await _gameService.GetGame(gameId);
+
+                if (game != null)
+                {
+                    return new OkObjectResult(game);
+                }
+                else
+                {
+                    return NotFound(); // or return a more specific NotFound result if needed
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                // Log the exception for debugging purposes
+            }
+
         }
 
         [HttpPost()]

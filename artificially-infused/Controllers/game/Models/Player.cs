@@ -1,4 +1,4 @@
-﻿namespace artificially_infused.Controllers.tv
+﻿namespace artificially_infused.Controllers.game
 {
     /*"playerId": 1234,
             "name": "Steve",

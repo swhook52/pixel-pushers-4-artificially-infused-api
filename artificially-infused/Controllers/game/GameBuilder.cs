@@ -1,7 +1,7 @@
 ﻿using shortid.Configuration;
 using shortid;
 
-namespace artificially_infused.Controllers.tv
+namespace artificially_infused.Controllers.game
 {
     public static class GameBuilder
     {

@@ -1,4 +1,4 @@
-﻿using artificially_infused.Controllers.tv;
+﻿using artificially_infused.Controllers.game;
 
 namespace artificially_infused.Services
 {
@@ -10,14 +10,10 @@ namespace artificially_infused.Services
             _gameRepository = gameRepo;
         }
 
-        public Game GetGame(string gameId)
+        public async Task<Game> GetGame(string gameId)
         {
-            // Get the game from storage
-            return new Game()
-            {
-                Code = gameId
-            };
-        }
+            return await _gameRepository.GetGameAsync(gameId);
+       }
 
         public Game CreateGame()
         {

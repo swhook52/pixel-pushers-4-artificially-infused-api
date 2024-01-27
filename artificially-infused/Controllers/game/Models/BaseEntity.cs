@@ -1,7 +1,7 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 
-namespace artificially_infused.Controllers.tv
+namespace artificially_infused.Controllers.game
 {
     public class BaseEntity: ITableEntity
     {
