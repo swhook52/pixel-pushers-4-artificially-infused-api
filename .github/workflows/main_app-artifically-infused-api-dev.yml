@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
         working-directory: artificially-infused
 
       - name: dotnet publish
