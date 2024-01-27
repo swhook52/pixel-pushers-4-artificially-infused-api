@@ -16,17 +16,17 @@ namespace artificially_infused.Controllers
 
         [HttpPost("game/{gameId}/player")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Create(string gameId, [FromBody] Player player)
+        public async Task<IActionResult> Create(string gameId, [FromBody] Player player)
         {
-            _gameService.AddPlayerToGame(gameId, player);
+            await _gameService.AddPlayerToGame(gameId, player);
             return new NoContentResult();
         }
 
         [HttpDelete("game/{gameId}/player/{playerId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(string gameId, string playerId)
+        public async Task<IActionResult> Delete(string gameId, string playerId)
         {
-            _gameService.DeletePlayerFromGame(gameId, playerId);
+            await _gameService.DeletePlayerFromGame(gameId, playerId);
             return new NoContentResult();
         }
     }

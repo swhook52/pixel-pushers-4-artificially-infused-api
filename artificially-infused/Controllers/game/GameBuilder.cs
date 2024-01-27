@@ -10,7 +10,7 @@ namespace artificially_infused.Controllers.game
             var options = new GenerationOptions(length: 8, useSpecialCharacters: false, useNumbers: true);
             string id = ShortId.Generate(options);
             
-            Game game = new Game() { Code = id };
+            Game game = new Game() { Code = id, RowKey = id, PartitionKey = id };
             return ResetGame(game);
         }
         public static Game ResetGame(Game existingGame)
@@ -18,7 +18,5 @@ namespace artificially_infused.Controllers.game
             existingGame.Round = new Round();
             return existingGame;
         }
-
-        
     }
 }
