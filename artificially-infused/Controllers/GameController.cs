@@ -65,5 +65,24 @@ namespace artificially_infused.Controllers
             await _gameService.DeleteGame(gameId);
             return new NoContentResult();
         }
+
+
+
+        /*
+        ## POST End Round
+                Request has gameId
+        Response: 204
+        API will calculate top level score. Reset round number and template and fill word banks
+        */
+        [HttpPost("{gameId}/endround")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> EndRound(string gameId)
+        {
+            // Host has enough players and starts the game.
+            // Update the game with the round info(round number 1, template)
+
+            await _gameService.StartGame(gameId);
+            return new NoContentResult();
+        }
     }
 }

@@ -58,6 +58,43 @@ namespace artificially_infused.Services
             await _gameRepository.DeleteGameAsync(gameId);
         }
 
+        public async Task EndRound(string gameId)
+        {
+            // Get the game from storage
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
+
+            if (existingGame.Round == null)
+            {
+                existingGame.Round = new Round();
+            }
+            existingGame.Round.RoundNumber++;
+            existingGame.Round.Template = getTemplate();
+            var winningPlayer = existingGame.Round.Solutions.Aggregate((i1, i2) => i1.Votes > i2.Votes ? i1 : i2);
+            
+            foreach (Player p in existingGame.Players)
+            {
+                //p.Nouns = ;
+                //p.verbs
+                //p.
+                if(p.Id == winningPlayer.PlayerId)
+                {
+                    p.Score++;
+                }
+            }
+            foreach (Solution s in existingGame.Round.Solutions)
+            {
+                s.Votes = 0;
+                s.ImageUrl = "";
+                s.Prompt = "";
+            }
+            // Update the Storage
+            await _gameRepository.SaveGameAsync(existingGame);
+        }
+
         public async Task AddPlayerToGame(string gameId, Player player)
         {
             // Get the game from storage
@@ -110,6 +147,20 @@ namespace artificially_infused.Services
 
             // Update the Storage
             await _gameRepository.SaveGameAsync(existingGame);
+        }
+
+        public async Task AddVote(string gameId, string playerId)
+        {
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
+            Solution s = existingGame.Round.Solutions.Where(x => x.PlayerId == playerId).First();
+            s.Votes++;
+            await _gameRepository.SaveGameAsync(existingGame);
+
+
         }
     }
 }

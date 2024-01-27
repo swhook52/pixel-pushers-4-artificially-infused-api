@@ -22,6 +22,19 @@ namespace artificially_infused.Controllers
             return new NoContentResult();
         }
 
+        /*
+       ## POST Round Vote
+       - endpoint will accept game id, awarded player id
+       - don't need a response. 204
+       */
+        [HttpPost("game/{gameId}/player/{playerId}/vote")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Vote(string gameId, string playerId)
+        {
+            await _gameService.AddVote(gameId, playerId);
+            return new NoContentResult();
+        }
+
         [HttpDelete("game/{gameId}/player/{playerId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(string gameId, string playerId)
