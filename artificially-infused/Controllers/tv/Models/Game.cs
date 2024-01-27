@@ -1,4 +1,7 @@
-﻿namespace artificially_infused.Controllers.tv
+﻿using Azure;
+using Azure.Data.Tables;
+
+namespace artificially_infused.Controllers.tv
 {
     /*
     # API Endpoints
@@ -103,13 +106,14 @@ Response:
 
 
     */
-    public class Game
+    public class Game: BaseEntity
     {
-        public Game() {
+        public Game() { 
             Code = "";
             Players = new List<Player>(); 
             Round = new Round();
         }
+        
         public string Code { get; set; }
         public List<Player> Players { get; set; }
         public Round Round { get; set; }

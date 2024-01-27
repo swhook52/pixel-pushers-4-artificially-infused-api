@@ -10,6 +10,13 @@ namespace artificially_infused.Controllers.tv
     [Route("[controller]")]
     public class TVController : ControllerBase
     {
+        private readonly string startificiallyinfuseddev = "DefaultEndpointsProtocol=https;AccountName=startificiallyinfuseddev;AccountKey=QShFG5XUWa5f6OwqJ/UzxtnIORBsWZxylC1vP9xa4hskWJ++EYDRGNTgqGFhIC3GUtHRqOBY0c0K+AStqZOQag==;EndpointSuffix=core.windows.net";
+
+        private readonly GameRepository _gameRepository;
+        public TVController()
+        {
+            _gameRepository = new GameRepository(startificiallyinfuseddev);
+        }
         /*
      
         ## GET Game by ID
@@ -18,9 +25,27 @@ namespace artificially_infused.Controllers.tv
 
         // GET api/<TVController>/5
         [HttpGet("{code}")]
-        public string Get(string code)
+        public async Task<ActionResult<Game>> Get(string code)
         {
-            return GameBuilder.NewGame().Code = code;
+            
+            try
+            {
+                var game = await _gameRepository.GetGameAsync(code);
+
+                if (game != null)
+                {
+                    return Ok(game);
+                }
+                else
+                {
+                    return NotFound(); // or return a more specific NotFound result if needed
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                // Log the exception for debugging purposes
+            }
         }
 
         // POST <TVController>

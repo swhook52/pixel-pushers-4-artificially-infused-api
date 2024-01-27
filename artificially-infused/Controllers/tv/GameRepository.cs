@@ -8,9 +8,9 @@ namespace artificially_infused.Controllers.tv
     public class GameRepository
     {
         private readonly TableClient _tableClient;
-
-        public GameRepository(string connectionString, string tableName)
+          public GameRepository(string connectionString)
         {
+            string tableName = "game";
             var serviceClient = new TableServiceClient(connectionString);
             _tableClient = serviceClient.GetTableClient(tableName);
             _tableClient.CreateIfNotExistsAsync().Wait(); // Ensure the table exists
@@ -18,14 +18,22 @@ namespace artificially_infused.Controllers.tv
 
         public async Task SaveGameAsync(Game game)
         {
-            var gameEntity = new GameEntity(game);
+            await _tableClient.UpsertEntityAsync(game);
+        }
 
-            await _tableClient.UpsertEntityAsync(gameEntity);
+        public async Task<Game> GetGameAsync(string gameId)
+        {
+            var partitionKey = gameId;
+            var rowKey = gameId;
+
+            var gameEntity = await _tableClient.GetEntityAsync<Game>(partitionKey, rowKey);
+
+            return gameEntity;
         }
 
         public async IAsyncEnumerable<Game> GetAllGamesAsync()
         {
-            await foreach (var entity in _tableClient.QueryAsync<GameEntity>())
+            await foreach (var entity in _tableClient.QueryAsync<Game>())
             {
                 yield return new Game
                 {
@@ -35,27 +43,7 @@ namespace artificially_infused.Controllers.tv
         }
     }
 
-    public class GameEntity : ITableEntity
-    {
-        public string PartitionKey { get; set; }
-        public string RowKey { get; set; }
-        public DateTimeOffset? Timestamp { get; set; }
-        public ETag ETag { get; set; }
-
-        public string Title { get; set; }
-        public int Score { get; set; }
-
-        public GameEntity()
-        {
-        }
-
-        public GameEntity(Game game)
-        {
-            PartitionKey = "Games";
-            //RowKey = game.Id.ToString();
-            //Title = game.Title;
-            //Score = game.Score;
-        }
-    }
+   
+    
 
 }
