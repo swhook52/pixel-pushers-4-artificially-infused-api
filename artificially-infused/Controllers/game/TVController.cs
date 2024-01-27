@@ -10,12 +10,11 @@ namespace artificially_infused.Controllers.tv
     [Route("[controller]")]
     public class TVController : ControllerBase
     {
-        private readonly string startificiallyinfuseddev = "DefaultEndpointsProtocol=https;AccountName=startificiallyinfuseddev;AccountKey=QShFG5XUWa5f6OwqJ/UzxtnIORBsWZxylC1vP9xa4hskWJ++EYDRGNTgqGFhIC3GUtHRqOBY0c0K+AStqZOQag==;EndpointSuffix=core.windows.net";
-
+        
         private readonly GameRepository _gameRepository;
-        public TVController()
+        public TVController(GameRepository gameRepo)
         {
-            _gameRepository = new GameRepository(startificiallyinfuseddev);
+            _gameRepository = gameRepo;
         }
         /*
      

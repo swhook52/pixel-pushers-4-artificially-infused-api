@@ -5,6 +5,12 @@ namespace artificially_infused.Services
 {
     public class GameService
     {
+        private readonly GameRepository _gameRepository;
+        public GameService(GameRepository gameRepo)
+        {
+            _gameRepository = gameRepo;
+        }
+
         public Game GetGame(string gameId)
         {
             // Get the game from storage

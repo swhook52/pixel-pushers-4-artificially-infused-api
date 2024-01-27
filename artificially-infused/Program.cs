@@ -1,4 +1,6 @@
+using artificially_infused.Controllers.tv;
 using artificially_infused.Services;
+string startificiallyinfuseddev = "DefaultEndpointsProtocol=https;AccountName=startificiallyinfuseddev;AccountKey=QShFG5XUWa5f6OwqJ/UzxtnIORBsWZxylC1vP9xa4hskWJ++EYDRGNTgqGFhIC3GUtHRqOBY0c0K+AStqZOQag==;EndpointSuffix=core.windows.net";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GameService, GameService>();
+builder.Services.AddScoped<GameRepository>(x => new GameRepository(startificiallyinfuseddev));
 
 var app = builder.Build();
 
