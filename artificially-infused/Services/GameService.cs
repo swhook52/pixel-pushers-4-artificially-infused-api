@@ -55,7 +55,7 @@ namespace artificially_infused.Services
 
         public async Task DeleteGame(string gameId)
         {
-            // var game = await _gameRepository.DeleteGameAsync(gameId);
+            await _gameRepository.DeleteGameAsync(gameId);
         }
 
         public async Task AddPlayerToGame(string gameId, Player player)
