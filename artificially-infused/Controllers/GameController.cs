@@ -45,9 +45,10 @@ namespace artificially_infused.Controllers
 
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<Game> Create()
+        public async Task<ActionResult<Game>> Create()
         {
-            var game = _gameService.CreateGame();
+            var game = await _gameService.CreateGame();
+
             return new CreatedAtActionResult("Get", "Game", new { gameId = game.Code }, game);
         }
 

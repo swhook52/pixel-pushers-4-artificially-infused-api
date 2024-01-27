@@ -30,7 +30,15 @@ namespace artificially_infused.Controllers.game
 
             return gameEntity;
         }
+        public async Task DeleteGameAsync(string gameId)
+        {
+            var partitionKey = gameId;
+            var rowKey = gameId.ToString();
 
+            var gameEntity = new Game { PartitionKey = partitionKey, RowKey = rowKey };
+
+            await _tableClient.DeleteEntityAsync(gameEntity.PartitionKey, gameEntity.RowKey, gameEntity.ETag);
+        }
         public async IAsyncEnumerable<Game> GetAllGamesAsync()
         {
             await foreach (var entity in _tableClient.QueryAsync<Game>())

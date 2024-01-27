@@ -15,20 +15,23 @@ namespace artificially_infused.Services
             return await _gameRepository.GetGameAsync(gameId);
        }
 
-        public Game CreateGame()
+        public async Task<Game> CreateGame()
         {
-            return GameBuilder.NewGame();
+            var game = GameBuilder.NewGame();
+            await _gameRepository.SaveGameAsync(game);
+            return game;
         }
 
-        public void DeleteGame(string gameId)
+        public async Task DeleteGame(string gameId)
         {
-            GameBuilder.DeleteGame(gameId);
+            await _gameRepository.DeleteGameAsync(gameId);
         }
 
-        public void AddPlayerToGame(string gameId, Player player)
+        public async Task AddPlayerToGame(string gameId, Player player)
         {
             // Get the Game (should probalby throw if it's not there)
-            var existingGame = GameBuilder.GetGame(gameId);
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            
             
             // Add the player
             if (existingGame.Players == null)
@@ -47,10 +50,10 @@ namespace artificially_infused.Services
             // Update the Storage
         }
 
-        public void DeletePlayerFromGame(string gameId, string playerId)
+        public async Task DeletePlayerFromGame(string gameId, string playerId)
         {
             // Get the Game (should probalby throw if it's not there)
-            var existingGame = GameBuilder.GetGame(gameId);
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
 
             // Delete the player
             if (existingGame.Players == null)

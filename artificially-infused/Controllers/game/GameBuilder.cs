@@ -10,24 +10,15 @@ namespace artificially_infused.Controllers.game
             var options = new GenerationOptions(length: 8, useSpecialCharacters: false, useNumbers: true);
             string id = ShortId.Generate(options);
             
-            Game game = new Game() { Code = id.Insert(4, " ") };
+            Game game = new Game() { Code = id };
             return ResetGame(game);
         }
         public static Game ResetGame(Game existingGame)
         {
-
+            existingGame.Round = new Round();
             return existingGame;
         }
 
-        public static void DeleteGame(string gameId)
-        {
-            // Delete from storage
-        }
-
-        public static Game GetGame(string gameId)
-        {
-            // Get from storage
-            return NewGame();
-        }
+        
     }
 }
