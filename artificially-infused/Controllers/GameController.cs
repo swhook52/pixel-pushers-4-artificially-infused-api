@@ -2,7 +2,7 @@
 using artificially_infused.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace artificially_infused.Controllers.game
+namespace artificially_infused.Controllers
 {
     [ApiController]
     [Route("[controller]")]
