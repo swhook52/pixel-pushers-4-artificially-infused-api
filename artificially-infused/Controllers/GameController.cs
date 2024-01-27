@@ -1,6 +1,5 @@
 ﻿using artificially_infused.Controllers.game;
 using artificially_infused.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace artificially_infused.Controllers
@@ -20,8 +19,6 @@ namespace artificially_infused.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Game>> Get(string gameId)
         {
-            
-            
             try
             {
                 var game =  await _gameService.GetGame(gameId);
@@ -40,22 +37,32 @@ namespace artificially_infused.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
                 // Log the exception for debugging purposes
             }
-
         }
 
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<Game> Create()
+        public async Task<ActionResult<Game>> Create()
         {
-            var game = _gameService.CreateGame();
+            var game = await _gameService.CreateGame();
             return new CreatedAtActionResult("Get", "Game", new { gameId = game.Code }, game);
+        }
+
+        [HttpPost("{gameId}/start")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Start(string gameId)
+        {
+            // Host has enough players and starts the game.
+            // Update the game with the round info(round number 1, template)
+
+            await _gameService.StartGame(gameId);
+            return new NoContentResult();
         }
 
         [HttpDelete("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(string gameId)
+        public async Task<IActionResult> Delete(string gameId)
         {
-            _gameService.DeleteGame(gameId);
+            await _gameService.DeleteGame(gameId);
             return new NoContentResult();
         }
     }
