@@ -3,6 +3,7 @@ using artificially_infused.Controllers.game.Models;
 using Azure;
 using Azure.Storage.Blobs;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -17,6 +18,7 @@ namespace artificially_infused.Services
         private readonly ImageRepository _imageRepository;
         private readonly PromptsRepository _promptsRepository;
         private readonly HttpClient _httpClient;
+        private readonly Random _random = new Random();
 
         public GameService(GameRepository gameRepo, IHttpClientFactory httpClientFactory, ImageRepository imageRepository)
         {
@@ -82,57 +84,49 @@ namespace artificially_infused.Services
 
         public string GetRandomPrompt()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Prompts.Count);
+            int num = _random.Next(1, _promptsRepository.Prompts.Count);
             return _promptsRepository.Prompts[num];
         }
 
         public string GetRandomPromptWithStyle()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Prompts.Count);
+            int num = _random.Next(1, _promptsRepository.Prompts.Count);
             return _promptsRepository.Prompts[num] + " in the style of " + GetRandomStyle();
         }
 
         public string GetRandomStyle()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Styles.Count);
+            int num = _random.Next(1, _promptsRepository.Styles.Count);
             return _promptsRepository.Styles[num];
         }
 
         public string GetRandomNoun()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Nouns.Count);
+            int num = _random.Next(1,_promptsRepository.Nouns.Count);
             return _promptsRepository.Nouns[num];
         }
 
         public string GetRandomVerb()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Verbs.Count);
+            int num = _random.Next(1, _promptsRepository.Verbs.Count);
             return _promptsRepository.Verbs[num];
         }
 
         public string GetRandomAdjective()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Adjectives.Count);
+            int num = _random.Next(1, _promptsRepository.Adjectives.Count);
             return _promptsRepository.Adjectives[num];
         }
 
         public string GetRandomLocation()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Locations.Count);
+            int num = _random.Next(1,_promptsRepository.Locations.Count);
             return _promptsRepository.Locations[num];
         }
 
         public string GetRandomFood()
         {
-            Random rnd = new Random();
-            int num = rnd.Next(_promptsRepository.Food.Count);
+            int num = _random.Next(1,_promptsRepository.Food.Count);
             return _promptsRepository.Food[num];
         }
 
