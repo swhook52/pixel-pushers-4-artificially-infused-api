@@ -33,7 +33,7 @@
                     "Fooocus Sharp"
                 },
                 performance_selection = "Speed",
-                aspect_ratios_selection = "1152*896",
+                aspect_ratios_selection = "700*700",
                 image_number = 1,
                 image_seed = -1,
                 sharpness = 2,
