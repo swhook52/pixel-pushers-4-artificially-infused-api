@@ -21,7 +21,7 @@ namespace artificially_infused.Controllers
         {
             try
             {
-                var game =  await _gameService.GetGame(gameId);
+                var game =  await _gameService.GetGame(gameId.ToUpper());
 
                 if (game != null)
                 {

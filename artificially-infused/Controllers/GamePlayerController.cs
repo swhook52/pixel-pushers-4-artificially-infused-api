@@ -19,7 +19,7 @@ namespace artificially_infused.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Create(string gameId, [FromBody] Player player)
         {
-            await _gameService.AddPlayerToGame(gameId, player);
+            await _gameService.AddPlayerToGame(gameId.ToUpper(), player);
             return new NoContentResult();
         }
 
