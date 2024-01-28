@@ -9,7 +9,5 @@ namespace artificially_infused.Controllers.game
         public string RowKey { get; set; }
         public DateTimeOffset? Timestamp { get; set; }
         public ETag ETag { get; set; }
-
-
     }
 }

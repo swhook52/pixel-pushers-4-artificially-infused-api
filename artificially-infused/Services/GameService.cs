@@ -36,25 +36,60 @@ namespace artificially_infused.Services
             await _gameRepository.SaveGameAsync(game);
         }
 
-        private string GetRandomPrompt()
+        public string GetRandomPrompt()
         {
             Random rnd = new Random();
             int num = rnd.Next(_promptsRepository.Prompts.Count);
             return _promptsRepository.Prompts[num];
         }
 
-        private string GetRandomPromptWithStyle()
+        public string GetRandomPromptWithStyle()
         {
             Random rnd = new Random();
             int num = rnd.Next(_promptsRepository.Prompts.Count);
             return _promptsRepository.Prompts[num] + " in the style of " + GetRandomPrompt();
         }
 
-        private string GetRandomStyle()
+        public string GetRandomStyle()
         {
             Random rnd = new Random();
             int num = rnd.Next(_promptsRepository.Styles.Count);
             return _promptsRepository.Styles[num];
+        }
+
+        public string GetRandomNoun()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Nouns.Count);
+            return _promptsRepository.Nouns[num];
+        }
+
+        public string GetRandomVerb()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Verbs.Count);
+            return _promptsRepository.Verbs[num];
+        }
+
+        public string GetRandomAdjective()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Adjectives.Count);
+            return _promptsRepository.Adjectives[num];
+        }
+
+        public string GetRandomLocation()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Locations.Count);
+            return _promptsRepository.Locations[num];
+        }
+
+        public string GetRandomFood()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(_promptsRepository.Food.Count);
+            return _promptsRepository.Food[num];
         }
 
         private string getTemplate()
