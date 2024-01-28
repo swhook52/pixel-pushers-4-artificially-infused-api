@@ -1,4 +1,5 @@
 ﻿using artificially_infused.Controllers.game;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace artificially_infused.Services
@@ -182,6 +183,37 @@ namespace artificially_infused.Services
 
 
         }
+        public async Task PlayerSubmitWords(string gameId, string playerId, List<string> words)
+        {
+            var existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
+            if (existingGame.Round.Solutions.Count == 0)
+            {
+                GameBuilder.InitializeRound(existingGame);
+            }
+            Solution s = existingGame.Round.Solutions.Where(x => x.PlayerId == playerId).First();
+            s.Prompt = BuildPromptFromTemplate(existingGame.Round.Template, words);
+            await _gameRepository.SaveGameAsync(existingGame);
 
+
+        }
+
+        private string BuildPromptFromTemplate(string template, List<string> words)
+        {
+            if (string.IsNullOrEmpty(template))
+            {
+                template = "A {NOUN} riding a unicycle while juggling multiple {NOUN}.";
+            }
+            Regex yourRegex = new Regex(@"\{([^\}]+)\}");
+            foreach (string w in words)
+            {
+                template = yourRegex.Replace(template, w, 1);
+
+            }
+            return template;
+        }
     }
 }

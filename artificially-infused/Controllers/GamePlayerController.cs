@@ -42,5 +42,25 @@ namespace artificially_infused.Controllers
             await _gameService.DeletePlayerFromGame(gameId, playerId);
             return new NoContentResult();
         }
+
+        /*
+        ## POST Round Solution
+        - Caller provides game id, player id and the prompt
+        - Request
+        ```json
+        {
+        "words" [
+        "ski",
+        "monkey"
+        ]
+
+        */
+        [HttpPost("game/{gameId}/player/{playerId}/solution")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Solution(string gameId, string playerId, [FromBody] List<string> words)
+        {
+            await _gameService.PlayerSubmitWords(gameId, playerId, words);
+            return new NoContentResult();
+        }
     }
 }

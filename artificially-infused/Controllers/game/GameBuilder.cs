@@ -18,5 +18,15 @@ namespace artificially_infused.Controllers.game
             existingGame.Round = new Round();
             return existingGame;
         }
+        public static Game InitializeRound(Game existingGame)
+        {
+            existingGame.Round = new Round();
+            existingGame.Round.RoundNumber = 1;
+            foreach (Player p in existingGame.Players)
+            {
+                existingGame.Round.Solutions.Add(new Solution() { PlayerId = p.Id, Votes = 0 });
+            }
+            return existingGame;
+        }
     }
 }
