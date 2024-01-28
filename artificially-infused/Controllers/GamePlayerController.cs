@@ -1,4 +1,5 @@
 ﻿using artificially_infused.Controllers.game;
+using artificially_infused.Controllers.game.Models;
 using artificially_infused.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,23 +44,11 @@ namespace artificially_infused.Controllers
             return new NoContentResult();
         }
 
-        /*
-        ## POST Round Solution
-        - Caller provides game id, player id and the prompt
-        - Request
-        ```json
-        {
-        "words" [
-        "ski",
-        "monkey"
-        ]
-
-        */
         [HttpPost("game/{gameId}/player/{playerId}/solution")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Solution(string gameId, string playerId, [FromBody] List<string> words)
+        public async Task<IActionResult> Solution(string gameId, string playerId, [FromBody] SolveRequest solveRequest)
         {
-            await _gameService.PlayerSubmitWords(gameId, playerId, words);
+            await _gameService.AddSolution(gameId, playerId, solveRequest);
             return new NoContentResult();
         }
     }
