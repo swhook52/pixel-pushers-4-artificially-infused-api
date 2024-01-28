@@ -31,6 +31,30 @@ namespace artificially_infused.Services
             return await _gameRepository.GetGameAsync(gameId);
         }
 
+        private void FillPlayerCardBanks(Player p)
+        {
+            int bankSize = 10;
+            for (int I = p.Nouns.Count;I< bankSize; I++)
+            {
+                p.Nouns.Add(GetRandomNoun());
+            }
+            for (int I = p.Adjectives.Count; I < bankSize; I++)
+            {
+                p.Adjectives.Add(GetRandomAdjective());
+            }
+            for (int I = p.Foods.Count; I < bankSize; I++)
+            {
+                p.Foods.Add(GetRandomFood());
+            }
+            for (int I = p.Locations.Count; I < bankSize; I++)
+            {
+                p.Locations.Add(GetRandomLocation());
+            }
+            for (int I = p.Verbs.Count; I < bankSize; I++)
+            {
+                p.Verbs.Add(GetRandomVerb());
+            }
+        }
         public async Task StartGame(string gameId)
         {
             // Get the game from storage
@@ -42,6 +66,15 @@ namespace artificially_infused.Services
                 RoundNumber = 1,
                 Template = getTemplate(),
             };
+            foreach(var p in game.Players)
+            {
+                p.Nouns = new List<string>();
+                p.Adjectives = new List<string>();
+                p.Nouns = new List<string>();
+                p.Locations = new List<string>();
+                p.Verbs = new List<string>();
+                FillPlayerCardBanks(p);
+            }
 
             // Save to storage
             await _gameRepository.SaveGameAsync(game);
@@ -58,7 +91,7 @@ namespace artificially_infused.Services
         {
             Random rnd = new Random();
             int num = rnd.Next(_promptsRepository.Prompts.Count);
-            return _promptsRepository.Prompts[num] + " in the style of " + GetRandomPrompt();
+            return _promptsRepository.Prompts[num] + " in the style of " + GetRandomStyle();
         }
 
         public string GetRandomStyle()
