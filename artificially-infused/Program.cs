@@ -4,13 +4,6 @@ string startificiallyinfuseddev = "DefaultEndpointsProtocol=https;AccountName=st
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-    .AddJsonFile($"appsettings.secret.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
-
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
