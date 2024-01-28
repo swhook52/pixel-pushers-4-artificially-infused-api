@@ -21,10 +21,13 @@ namespace artificially_infused.Controllers.game
 
         public async Task<string> Upload(byte[] data, string gameId, int roundNumber, string playerId)
         {
+            var key = $"{gameId}/{roundNumber}/{playerId}.png";
+            var blobClient = _blobContainerClient.GetBlobClient(key);
+
             // Upload the byte array to the blob
             using (var stream = new MemoryStream(data, false))
             {
-                var blobResponse = await _blobContainerClient.UploadBlobAsync($"{gameId}/{roundNumber}/{playerId}.png", stream);
+                var blobResponse = await blobClient.UploadAsync(stream, overwrite: true);
                 return $"{BLOB_ROOT_URL}/{gameId}/{roundNumber}/{playerId}.png";
             }
         }

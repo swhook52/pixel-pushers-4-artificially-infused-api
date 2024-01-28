@@ -304,7 +304,12 @@ namespace artificially_infused.Services
             }
             else if (existingGame.Round.Solutions.Exists(p => p.PlayerId == playerId))
             {
-                // throw?
+                // Replace the solution
+                var index = existingGame.Round.Solutions.FindIndex(p => p.PlayerId == playerId);
+                if (index >= 0)
+                {
+                    existingGame.Round.Solutions[index] = solution;
+                }
             }
             else
             {
