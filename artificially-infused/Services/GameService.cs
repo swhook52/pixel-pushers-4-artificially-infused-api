@@ -303,7 +303,7 @@ namespace artificially_infused.Services
             }
 
             // Generate AI image with prompt
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://sixty-ways-battle.loca.lt/v1/generation/text-to-image");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://morally-rich-beetle.ngrok-free.app/v1/generation/text-to-image");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/png"));
 
             var aiRequestMessage = AIGenerateRequest.GetDefaultRequest();
