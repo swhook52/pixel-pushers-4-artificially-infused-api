@@ -333,6 +333,7 @@ namespace artificially_infused.Services
 
             // Get the game again so we have less of a race condition
             existingGame = await _gameRepository.GetGameAsync(gameId);
+            player = existingGame.Players.SingleOrDefault(p => p.Id == playerId);
             if (existingGame == null)
             {
                 throw new Exception($"Game with Id {gameId} not found");
