@@ -152,12 +152,7 @@ namespace artificially_infused.Services
                     p.Score++;
                 }
             }
-            foreach (Solution s in existingGame.Round.Solutions)
-            {
-                s.Votes = 0;
-                s.ImageUrl = "";
-                s.Prompt = "";
-            }
+            existingGame.Round.Solutions = new List<Solution>();
             // Update the Storage
             await _gameRepository.SaveGameAsync(existingGame);
         }
