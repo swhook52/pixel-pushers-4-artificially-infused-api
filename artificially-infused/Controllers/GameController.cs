@@ -104,7 +104,7 @@ namespace artificially_infused.Controllers
             // Host has enough players and starts the game.
             // Update the game with the round info(round number 1, template)
 
-            await _gameService.StartGame(gameId);
+            await _gameService.EndRound(gameId);
             return new NoContentResult();
         }
     }
