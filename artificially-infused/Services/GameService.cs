@@ -342,5 +342,10 @@ namespace artificially_infused.Services
             // Save the game object
             await _gameRepository.SaveGameAsync(existingGame);
         }
+        public async Task<List<string>> GetImages()
+        {
+            return await _imageRepository.GetBlobsAsync();
+            
+        }
     }
 }

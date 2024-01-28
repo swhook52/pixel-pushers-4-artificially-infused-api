@@ -39,6 +39,29 @@ namespace artificially_infused.Controllers
             }
         }
 
+        [HttpGet("images")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<string>>> Images()
+        {
+            try
+            {
+                var blobs = await _gameService.GetImages();
+                if (blobs != null)
+                {
+                    return new OkObjectResult(blobs);
+                }
+                else
+                {
+                    return NotFound(); // or return a more specific NotFound result if needed
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                // Log the exception for debugging purposes
+            }
+        }
+
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Game>> Create()
