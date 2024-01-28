@@ -547,7 +547,7 @@ namespace artificially_infused.Controllers.game
             "Garbage Cans ",
             "Garrison Keillor ",
             "Garth Brooks ",
-            "Gas Stations ",
+            "Gas Station ",
             "Geishas ",
             "Gen. George S. Patton ",
             "Genetic Engineering ",
@@ -614,7 +614,8 @@ namespace artificially_infused.Controllers.game
             "Homer Simpson ",
             "Homework ",
             "Hootie & The Blowfish ",
-
+            "Howard Stern ",
+    
 
         };
 
@@ -802,6 +803,7 @@ namespace artificially_infused.Controllers.game
             "Hard Boiled Eggs ",
             "Honey ",
             "Hot Chocolate ",
+            "Hotdogs ",
 
 
         };
