@@ -331,6 +331,13 @@ namespace artificially_infused.Services
                 Votes = 0
             };
 
+            // Get the game again so we have less of a race condition
+            existingGame = await _gameRepository.GetGameAsync(gameId);
+            if (existingGame == null)
+            {
+                throw new Exception($"Game with Id {gameId} not found");
+            }
+
             if (existingGame.Round.Solutions == null)
             {
                 existingGame.Round.Solutions = new List<Solution> { solution };
