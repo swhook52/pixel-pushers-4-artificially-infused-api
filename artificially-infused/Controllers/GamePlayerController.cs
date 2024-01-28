@@ -1,4 +1,5 @@
 ﻿using artificially_infused.Controllers.game;
+using artificially_infused.Controllers.game.Models;
 using artificially_infused.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,14 @@ namespace artificially_infused.Controllers
         public async Task<IActionResult> Delete(string gameId, string playerId)
         {
             await _gameService.DeletePlayerFromGame(gameId, playerId);
+            return new NoContentResult();
+        }
+
+        [HttpPost("game/{gameId}/player/{playerId}/solution")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Solution(string gameId, string playerId, [FromBody] SolveRequest solveRequest)
+        {
+            await _gameService.AddSolution(gameId, playerId, solveRequest);
             return new NoContentResult();
         }
     }
