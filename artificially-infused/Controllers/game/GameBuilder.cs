@@ -8,7 +8,7 @@ namespace artificially_infused.Controllers.game
         public static Game NewGame()
         {
             var options = new GenerationOptions(length: 8, useSpecialCharacters: false, useNumbers: true);
-            string id = ShortId.Generate(options);
+            string id = ShortId.Generate(options).ToUpper();
             
             Game game = new Game() { Code = id, RowKey = id, PartitionKey = id };
             return ResetGame(game);

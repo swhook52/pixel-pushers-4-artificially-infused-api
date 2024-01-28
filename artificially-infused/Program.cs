@@ -13,7 +13,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GameService, GameService>();
 builder.Services.AddScoped<GameRepository>(x => new GameRepository(startificiallyinfuseddev));
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+            builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
